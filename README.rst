@@ -11,6 +11,7 @@ Version
 Setup
 -----
 
+`qiita_v2: Python Package Index <https://pypi.python.org/pypi/qiita_v2>`_
 ::
 
   pip install qiita_v2
