@@ -4,6 +4,7 @@
 import requests
 import yaml
 from exception import QiitaApiException
+from response import QiitaResponse
 
 class QiitaClientBase():
     ''' Python Client Base for Qiita API v2
@@ -16,26 +17,33 @@ class QiitaClientBase():
         'User-Agent': USER_AGENT,
     }
 
-    def __init__(self, config_file=None, access_token=None, debug=False):
+    def __init__(self, config_file=None, access_token=None, team=None):
         ''' initialize instance with ACCESS_TOKEN
-        :param config_file: yaml file includes ACCESS_TOKEN: <your_token>
+        :param config_file: yaml file includes ACCESS_TOKEN and TEAM(if need)
+        :param team: <your_qiita_team>
         :param access_token: <your_token>
-        :param debug: _request returns requests.Response instance if True
         '''
+        if not config_file and (not access_token):
+            raise Exception('input config_file or access_token')
+        self.access_token = access_token
+        self.team = team
         if config_file:
             with open(config_file, 'r') as f:
                 config = yaml.load(f)
-                self.access_token = config['ACCESS_TOKEN']
-        else:
-            self.access_token = access_token
-        self.debug = debug
+                if 'ACCESS_TOKEN' in config:
+                    self.access_token = config['ACCESS_TOKEN']
+                if 'TEAM' in config:
+                    self.team = config['TEAM']
 
     def _url_prefix(self):
         ''' url prefix for api endpoint
         >>> client._url_prefix()
         'https://qiita.com/api/v2'
         '''
-        return 'https://{}/api/v2'.format(self.HOST)
+        if self.team:
+            return 'https://{}.{}/api/v2'.format(self.team, self.HOST)
+        else:
+            return 'https://{}/api/v2'.format(self.HOST)
 
     def header(self):
         ''' make request header
@@ -73,12 +81,8 @@ class QiitaClientBase():
             raise Exception('Unknown method')
 
         if response.ok:
-            if self.debug:
-                return response
-            return response.json()
+            return QiitaResponse(response)
         else:
-            if self.debug:
-                return response
             raise QiitaApiException(response.json())
 
     def request(self, method, path, params=None, headers=None):
