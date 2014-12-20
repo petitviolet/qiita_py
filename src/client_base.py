@@ -16,10 +16,11 @@ class QiitaClientBase():
         'User-Agent': USER_AGENT,
     }
 
-    def __init__(self, config_file=None, access_token=None):
+    def __init__(self, config_file=None, access_token=None, debug=False):
         ''' initialize instance with ACCESS_TOKEN
         :param config_file: yaml file includes ACCESS_TOKEN: <your_token>
         :param access_token: <your_token>
+        :param debug: _request returns requests.Response instance if True
         '''
         if config_file:
             with open(config_file, 'r') as f:
@@ -27,6 +28,7 @@ class QiitaClientBase():
                 self.access_token = config['ACCESS_TOKEN']
         else:
             self.access_token = access_token
+        self.debug = debug
 
     def _url_prefix(self):
         ''' url prefix for api endpoint
@@ -71,8 +73,12 @@ class QiitaClientBase():
             raise Exception('Unknown method')
 
         if response.ok:
+            if self.debug:
+                return response
             return response.json()
         else:
+            if self.debug:
+                return response
             raise QiitaApiException(response.json())
 
     def request(self, method, path, params=None, headers=None):
