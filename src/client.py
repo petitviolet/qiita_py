@@ -3,9 +3,10 @@
 '''
 import requests
 import yaml
+from exception import QiitaApiException
 
-class QiitaClient():
-    ''' Python Client for Qiita API v2
+class QiitaClientBase():
+    ''' Python Client Base for Qiita API v2
     '''
     HOST = 'qiita.com'
     USER_AGENT = 'Qiita python3 binding'
@@ -58,15 +59,21 @@ class QiitaClient():
         headers = self.header() if headers is None else headers
         if type(headers) is not dict:
             return TypeError('headers must be dictionary')
+
         method = method.upper()
         if method in ('GET', 'DELETE'):
-            return requests.request(
+            response = requests.request(
                 method=method, url=url, headers=headers, params=params)
         elif method in ('POST', 'PUT', 'PATCH'):
-            return requests.request(
+            response = requests.request(
                 method=method, url=url, headers=headers, json=params)
         else:
             raise Exception('Unknown method')
+
+        if response.ok:
+            return response.json()
+        else:
+            raise QiitaApiException(response.json())
 
     def request(self, method, path, params=None, headers=None):
         ''' alias for request with self._request method
