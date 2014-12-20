@@ -1,27 +1,27 @@
 Python Wrapper for Qiita API v2
-==
+===============================
 
 Api document: http://qiita.com/api/v2/docs
 
 Version
---
+-------
 
 0.1.0(2014/12/20)
 
 Setup
---
+-----
 
-```sh
-pip install qiita_v2
-```
+::
+
+  pip install qiita_v2
 
 How to Use
---
+----------
 
 Simple usage
-~~
+~~~~~~~~~~~~
 
-:: 
+::
 
   from qiita_v2.client import QiitaClient
 
@@ -32,6 +32,6 @@ Simple usage
 
 
 Lisence
---
+-------
 
-[MIT License](http://petitviolet.mit-license.org/)
+`MIT License <http://petitviolet.mit-license.org/>`_
