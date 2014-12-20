@@ -6,8 +6,8 @@ created by @petitviolet
 '''
 import requests
 import yaml
-from exception import QiitaApiException
-from response import QiitaResponse
+from .exception import QiitaApiException
+from .response import QiitaResponse
 
 
 class QiitaClientBase():

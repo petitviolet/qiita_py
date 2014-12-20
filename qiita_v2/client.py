@@ -4,7 +4,7 @@ Details: http://qiita.com/api/v2/docs
 
 created by @petitviolet
 '''
-from client_base import QiitaClientBase
+from .client_base import QiitaClientBase
 
 class QiitaClient(QiitaClientBase):
     def create_access_token(self, params=None, headers=None):
