@@ -146,14 +146,24 @@ class QiitaClientBase():
         '''
         return self.request('DELETE', path, params, headers)
 
-def test():
+def test(access_token):
     import doctest
-    doctest.testmod(extraglobs={'client': QiitaClientBase('../config.yml')})
+    doctest.testmod(
+        extraglobs={'client': QiitaClientBase(access_token=access_token)})
 
 if __name__ == '__main__':
     import sys
     if len(sys.argv) > 1:
         if sys.argv[1] == 'test':
-            test()
+            if len(sys.argv) > 2:
+                access_token = sys.argv[2]
+            else:
+                import os
+                access_token = os.environ['QIITA_ACCESS_TOKEN']
+            test(access_token)
     else:
+        print('1. python {} test <access_token>'.format(__file__))
+        print('----or----')
+        print('2. export QIITA_ACCESS_TOKEN=<access_token>')
+        print('   python {} test'.format(__file__))
         print('Enjoy Qiita!!!')
