@@ -1,10 +1,14 @@
-# -*- encoding:utf-8 -*-
-'''
+''' qiita.QiitaClientBase
+Base for QiitaClient
+Implements some primitive methods for request Qiita API v2
+
+created by @petitviolet
 '''
 import requests
 import yaml
 from exception import QiitaApiException
 from response import QiitaResponse
+
 
 class QiitaClientBase():
     ''' Python Client Base for Qiita API v2

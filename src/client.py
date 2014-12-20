@@ -1,5 +1,8 @@
-# -*- encoding:utf-8 -*-
-'''
+''' qiita.QiitaClient
+Python wrapper for Qiita API v2
+Details: http://qiita.com/api/v2/docs
+
+created by @petitviolet
 '''
 from client_base import QiitaClientBase
 

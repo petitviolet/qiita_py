@@ -1,5 +1,7 @@
-# -*- encoding:utf-8 -*-
-'''
+''' qiita.QiitaResponse
+Handling QiitaClient response
+
+created by @petitviolet
 '''
 import re
 
