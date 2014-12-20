@@ -103,7 +103,7 @@ class QiitaClientBase():
 
     def get(self, path, params=None, headers=None):
         ''' get request
-        >>> client.get('/users/petitviolet').status_code
+        >>> client.get('/users/petitviolet').status
         200
         '''
         return self.request('GET', path, params, headers)
@@ -122,10 +122,11 @@ class QiitaClientBase():
                             'title': 'test for python client {}'.format(now), \
                             'tweet': False, \
                         })
-        >>> res.status_code
+        >>> res.status
         201
-        >>> res = client.delete('/items/{}'.format(res.json()['id']))
-        >>> res.status_code
+        >>> id = res.to_json()['id']
+        >>> res = client.delete('/items/{}'.format(id))
+        >>> res.status
         204
         '''
         return self.request('POST', path, params, headers)
@@ -147,7 +148,7 @@ class QiitaClientBase():
 
 def test():
     import doctest
-    doctest.testmod(extraglobs={'client': QiitaClient('../config.yml')})
+    doctest.testmod(extraglobs={'client': QiitaClientBase('../config.yml')})
 
 if __name__ == '__main__':
     import sys
