@@ -27,7 +27,7 @@ Simple usage
   from qiita_v2.client import QiitaClient
 
   client = QiitaClient(access_token=<access_token>)
-  response = client.get_user('petitviolet')
+  res = client.get_user('petitviolet')
   res.to_json()
   # => jsonified contents
 
