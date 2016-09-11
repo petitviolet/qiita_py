@@ -6,7 +6,7 @@ Api document: http://qiita.com/api/v2/docs
 Version
 -------
 
-0.1.0(2014/12/20)
+0.1.1(2016/09/11)
 
 Setup
 -----
