@@ -58,7 +58,7 @@ class QiitaClientBase():
         '''
         if self.access_token:
             self.HEADER.update(
-                {'Authorization': ' Bearer {}'.format(self.access_token)})
+                {'Authorization': 'Bearer {}'.format(self.access_token)})
         return self.HEADER
 
     def _request(self, method, url, params=None, headers=None):
