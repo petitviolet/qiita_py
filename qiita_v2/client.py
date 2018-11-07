@@ -5,9 +5,13 @@ Details: http://qiita.com/api/v2/docs
 
 created by @petitviolet
 '''
+import warnings
 from .client_base import QiitaClientBase
 
 class QiitaClient(QiitaClientBase):
+    ''' Client for Qiita API v2
+    '''
+
     def create_access_token(self, params=None, headers=None):
         ''' 与えられた認証情報をもとに新しいアクセストークンを発行します。
         '''
@@ -46,11 +50,13 @@ class QiitaClient(QiitaClientBase):
     def thank_comment(self, comment_id, params=None, headers=None):
         ''' 特定のコメントにThankを付けます。
         '''
+        warnings.warn("deprecated", DeprecationWarning)
         return self.put("/comments/{}/thank".format(comment_id), params, headers)
 
     def unthank_comment(self, comment_id, params=None, headers=None):
         ''' 特定のコメントからThankを外します。
         '''
+        warnings.warn("deprecated", DeprecationWarning)
         return self.delete("/comments/{}/thank".format(comment_id), params, headers)
 
     def list_items(self, params=None, headers=None):
@@ -223,6 +229,11 @@ class QiitaClient(QiitaClientBase):
         '''
         return self.get("/authenticated_user", params, headers)
 
+    def get_authenticated_user_items(self, params=None, headers=None):
+        ''' アクセストークンに紐付いたユーザの投稿を返します。
+        '''
+        return self.get("/authenticated_user/items", params, headers)
+
     def list_user_followees(self, user_id, params=None, headers=None):
         ''' 特定のユーザがフォローしているユーザ一覧を返します。
         '''
@@ -252,3 +263,93 @@ class QiitaClient(QiitaClientBase):
         ''' 特定のユーザへのフォローを外します。
         '''
         return self.delete("/users/{}/following".format(user_id), params, headers)
+
+    def get_item_likes(self, item_id, params=None, headers=None):
+        ''' 特定の投稿に付けられたいいね一覧を返します。
+        '''
+        return self.get("/items/{}/likes".format(item_id), params, headers)
+
+    def get_comment_likes(self, comment_id, params=None, headers=None):
+        ''' 特定のコメントに付けられたいいね一覧を返します。
+        '''
+        return self.get("/comments/{}/likes".format(comment_id), params, headers)
+
+    def get_project_likes(self, project_id, params=None, headers=None):
+        ''' 特定のプロジェクトに付けられたいいね一覧を返します。
+        '''
+        return self.get("/projects/{}/likes".format(project_id), params, headers)
+
+    def like_item(self, item_id, params=None, headers=None):
+        ''' 特定の投稿にいいねを付けます。
+        '''
+        return self.post("/items/{}/likes".format(item_id), params, headers)
+
+    def like_comment(self, comment_id, params=None, headers=None):
+        ''' 特定のコメントにいいねを付けます。
+        '''
+        return self.post("/comments/{}/likes".format(comment_id), params, headers)
+
+    def like_project(self, project_id, params=None, headers=None):
+        ''' 特定のプロジェクトにいいねを付けます。
+        '''
+        return self.post("/projects/{}/likes".format(project_id), params, headers)
+
+    def delete_like_item(self, item_id, params=None, headers=None):
+        ''' 特定の投稿からいいねを削除します。
+        '''
+        return self.delete("/items/{}/likes".format(item_id), params, headers)
+
+    def delete_like_comment(self, comment_id, params=None, headers=None):
+        ''' 特定のコメントからいいねを削除します。
+        '''
+        return self.delete("/comments/{}/likes".format(comment_id), params, headers)
+
+    def delete_like_project(self, project_id, params=None, headers=None):
+        ''' 特定のプロジェクトからいいねを削除します。
+        '''
+        return self.delete("/projects/{}/likes".format(project_id), params, headers)
+
+    def get_item_reactions(self, item_id, params=None, headers=None):
+        ''' 特定の投稿に付けられた絵文字リアクション一覧を返します。
+        '''
+        return self.get("/items/{}/reactions".format(item_id), params, headers)
+
+    def get_comment_reactions(self, comment_id, params=None, headers=None):
+        ''' 特定のコメントに付けられた絵文字リアクション一覧を返します。
+        '''
+        return self.get("/comments/{}/reactions".format(comment_id), params, headers)
+
+    def get_project_reactions(self, project_id, params=None, headers=None):
+        ''' 特定のプロジェクトに付けられた絵文字リアクション一覧を返します。
+        '''
+        return self.get("/projects/{}/reactions".format(project_id), params, headers)
+
+    def reaction_item(self, item_id, params=None, headers=None):
+        ''' 特定の投稿に絵文字リアクションを付けます。
+        '''
+        return self.post("/items/{}/reactions".format(item_id), params, headers)
+
+    def reaction_comment(self, comment_id, params=None, headers=None):
+        ''' 特定のコメントに絵文字リアクションを付けます。
+        '''
+        return self.post("/comments/{}/reactions".format(comment_id), params, headers)
+
+    def reaction_project(self, project_id, params=None, headers=None):
+        ''' 特定のプロジェクトに絵文字リアクションを付けます。
+        '''
+        return self.post("/projects/{}/reactions".format(project_id), params, headers)
+
+    def delete_reaction_item(self, item_id, params=None, headers=None):
+        ''' 特定の投稿から絵文字リアクションを削除します。
+        '''
+        return self.delete("/items/{}/reactions".format(item_id), params, headers)
+
+    def delete_reaction_comment(self, comment_id, params=None, headers=None):
+        ''' 特定のコメントから絵文字リアクションを削除します。
+        '''
+        return self.delete("/comments/{}/reactions".format(comment_id), params, headers)
+
+    def delete_reaction_project(self, project_id, params=None, headers=None):
+        ''' 特定のプロジェクトから絵文字リアクションを削除します。
+        '''
+        return self.delete("/projects/{}/reactions".format(project_id), params, headers)
