@@ -1,4 +1,4 @@
 __name__ = 'qiita_v2'
 __author__ = 'petitviolet'
 __license__ = 'MIT'
-__version__ = '0.2.0'
+__version__ = '0.2.1'
